@@ -3,6 +3,7 @@
 // import
 const {Farm} = require('./index')
 const {Wheat, Sugarcane} = require('./crops')
+const {Cow, Horse} = require('./animals')
 
 //test Farm class
 test('A new Farm can be created', () => {
@@ -35,4 +36,26 @@ test('The income of a 100 Wheat + 100 Sugarcane farm is X', () => {
   expect(farm.calculateIncome()).toBeCloseTo(1918.37, 1)
 })
 
+// adding cow
+test('Animals can be added to the farm', () => {
+  const farm = new Farm()
+  farm.addAnimal(new Cow(100))
+})
+
+// 0 test with animals
+test('Animals will be taken into account for calculateIncome', () => {
+  const farm = new Farm()
+  farm.addAnimal(new Cow(100))
+  expect(farm.calculateIncome()).not.toBe(0)
+})
+
+// test with real income » crops and animals
+test('The income of a full farm', () => {
+  const farm = new Farm('TEST_NAME')
+  farm.addCrop(new Wheat(100))
+  farm.addCrop(new Sugarcane(100))
+  farm.addAnimal(new Cow(100))
+  farm.addAnimal(new Horse(10))
+  expect(farm.calculateIncome()).toBeCloseTo(2838.4, 1)
+})
   
